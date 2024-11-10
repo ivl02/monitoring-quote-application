@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quotes Application</title>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', sans-serif;
+                background: linear-gradient(to right, #8360c3, #2ebf91);
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                text-align: center;
+            }
+            .quote {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+                cursor: pointer;
+            }
+            .author {
+                font-size: 1.2em;
+                color: #000;
+                font-style: italic;
+            }
+            img {
+                height: 250px;
+                width: 250px;
+                object-fit: cover;
+                border-radius: 50%;
+                display: block;
+                margin: 20px auto;
+                border: 5px solid #555;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="quote-container">
+            <div class="quote" id="quote">Loading quote...</div>
+            <div class="author" id="author">Loading author...</div>
+            <img src="static/images/" class="image" id="author-image">
+        </div>
+
+        <script>
+            const quotes = [
+                {"quote": "The only thing we have to fear is fear itself.", "author": "Franklin D. Roosevelt", "image": "franklin_roosevelt.png"},
+                {"quote": "You must be the change you wish to see in the world.", "author": "Mahatma Gandhi", "image": "mahatma_gandhi.png"},
+                {"quote": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt", "image": "theodore_roosevelt.png"},
+                {"quote": "Many of life's failures are people who did not realize how close they were to success when they gave up.", "author": "Thomas A. Edison", "image": "thomas_edison.png"},
+                {"quote": "It is during our darkest moments that we must focus to see the light", "author": "Aristotle", "image": "aristotle.png"},
+                {"quote": "Success is not final; failure is not fatal: It is the courage to continue that counts.", "author": "Winston S. Churchill", "image": "winston_churchill.png"},
+                {"quote": "Spread love everywhere you go. Let no one ever come to you without leaving happier.", "author": "Mother Teresa", "image": "mother_theresa.png"},
+                {"quote": "In the end, we will remember not the words of our enemies, but the silence of our friends.", "author": "Martin Luther King Jr.", "image": "martin_luther_king.png"},
+                {"quote": "The future starts today, not tomorrow.", "author": "Pope John Paul II", "image": "pope_john_paul.png"},
+                {"quote": "The only way to do great work is to love what you do.", "author": "Steve Jobs", "image": "steve_jobs.png"},
+                {"quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "image": "albert_einstein.png"},
+                {"quote": "The secret of getting ahead is getting started.", "author": "Mark Twain", "image": "mark_twain.png"},
+                {"quote": "You will face many defeats in life, but never let yourself be defeated.", "author": "Maya Angelou", "image": "maya_angelou.png"},
+                {"quote": "Learning never exhausts the mind.", "author": "Leonardo da Vinci", "image": "leonardo_da_vinci.png"},
+                {"quote": "It always seems impossible until it's done.", "author": "Nelson Mandela", "image": "nelson_mandela.png"}
+            ];
+
+            function getRandomQuoteIndex() {
+                return Math.floor(Math.random() * quotes.length);
+            }
+
+            function loadRandomQuote() {
+                const index = getRandomQuoteIndex();
+                const quote = quotes[index];
+                document.getElementById('quote').innerHTML = `"${quote.quote}"`;
+                document.getElementById('author').innerHTML = `${quote.author}`;
+                document.getElementById('author-image').src = "static/images/" + `${quote.image}`;
+                incrementQuoteCounter(index);
+            }
+
+            function incrementQuoteCounter(index) {
+                fetch(`/quote/${index + 1}`);
+            }
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+                loadRandomQuote();
+                document.getElementById('quote').addEventListener('click', loadRandomQuote);
+            });
+        </script>
+    </body>
+</html>

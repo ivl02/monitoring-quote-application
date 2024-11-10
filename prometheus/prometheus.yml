@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'quote-app'
+    static_configs:
+      - targets: ['dc-quote-app:5000']
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['dc-prometheus:9090']
